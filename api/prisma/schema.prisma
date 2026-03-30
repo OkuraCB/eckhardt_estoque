@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Token {
+  id        Int       @id @default(autoincrement())
+
+  createdAt DateTime? @default(now()) @map("create_time") @db.Timestamp(0)
+  updatedAt DateTime? @map("update_time") @db.Timestamp(0)
+
+  token   String    @db.VarChar(3000)
+
+  userId    Int       @map("user_id")
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade, map: "fk_users_tokens")
+
+  @@index([userId], map: "fk_tokens_users1_idx")
+  @@map("tokens")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+
+  createdAt DateTime  @default(now()) @map("create_time") @db.Timestamp(0)
+  updatedAt DateTime? @map("update_time") @db.Timestamp(0)
+
+  name      String    @db.VarChar(100)
+  email     String    @unique(map: "email_UNIQUE") @db.VarChar(300)
+  password  String    @db.VarChar(300)
+
+  role      Role      @default(USER)
+
+  tokens    Token[]
+
+  @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
+}

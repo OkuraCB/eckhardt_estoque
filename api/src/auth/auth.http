@@ -1,0 +1,20 @@
+@BASE_URL=http://localhost:10000
+
+POST {{BASE_URL}}/auth/signin
+Content-Type: application/json
+
+{
+    "email": "arthur@teste.com",
+    "password": "1234"
+}
+
+###
+
+POST {{BASE_URL}}/auth/signup
+Content-Type: application/json
+
+{
+    "name": "Arthur",
+    "email": "arthur@teste.com",
+    "password": "1234"
+}
