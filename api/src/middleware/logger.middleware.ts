@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import { firstValueFrom } from 'rxjs';
-import { LogApiHttpWrapper } from 'src/logs/wrapper/logApi.wrapper';
+import { LogApiHttpWrapper } from '../logs/wrapper/logApi.wrapper';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {

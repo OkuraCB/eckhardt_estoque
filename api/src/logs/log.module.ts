@@ -1,6 +1,6 @@
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { logConfig } from 'src/config/logConfig';
+import { logConfig } from '../config/logConfig';
 import { LogApiHttpWrapper } from './wrapper/logApi.wrapper';
 
 @Module({
