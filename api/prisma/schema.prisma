@@ -39,6 +39,31 @@ model User {
   @@map("users")
 }
 
+model Produto {
+  id Int @id @default(autoincrement())
+
+  createdAt DateTime  @default(now()) @map("create_time") @db.Timestamp(0)
+  updatedAt DateTime? @map("update_time") @db.Timestamp(0)
+
+  name      String  @db.VarChar(100)
+  code      String?  @db.VarChar(50)
+  value     Float
+  stock     Int
+  collection  String?
+  model       String?
+  description String  @db.Text()
+
+  length  Float?
+  width   Float?
+  height  Float?
+
+  heightAddon Float?
+
+  image1  String
+  image2  String
+  image3  String
+}
+
 enum Role {
   USER
   ADMIN
