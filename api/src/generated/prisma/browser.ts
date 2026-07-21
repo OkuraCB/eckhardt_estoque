@@ -27,3 +27,18 @@ export type Token = Prisma.TokenModel
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
+ * Model Collection
+ * 
+ */
+export type Collection = Prisma.CollectionModel
+/**
+ * Model Model
+ * 
+ */
+export type Model = Prisma.ModelModel

@@ -6,12 +6,21 @@ import {
 } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
+import { CollectionsModule } from './collections/collection.module';
 import { LogModule } from './logs/log.module';
-import { LoggerMiddleware } from './middleware/logger.middleware';
+import { ModelsModule } from './model/model.module';
+import { ProductsModule } from './products/product.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, LogModule],
+  imports: [
+    AuthModule,
+    UsersModule,
+    LogModule,
+    CollectionsModule,
+    ModelsModule,
+    ProductsModule,
+  ],
   controllers: [],
   providers: [
     { provide: APP_PIPE, useValue: new ValidationPipe({ transform: true }) },

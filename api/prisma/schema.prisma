@@ -39,29 +39,56 @@ model User {
   @@map("users")
 }
 
-model Produto {
+model Product {
   id Int @id @default(autoincrement())
 
   createdAt DateTime  @default(now()) @map("create_time") @db.Timestamp(0)
   updatedAt DateTime? @map("update_time") @db.Timestamp(0)
 
   name      String  @db.VarChar(100)
-  code      String?  @db.VarChar(50)
-  value     Float
-  stock     Int
-  collection  String?
-  model       String?
-  description String  @db.Text()
+  code      String?  @unique(map: "code_UNIQUE") @db.VarChar(50) 
+  price     Float
+  qty     Int
+  description String?  @db.Text()
 
+  collection  Collection?  @relation(fields: [collectionId], references: [id])
+  model       Model? @relation(fields: [modelId],  references: [id])
+  
   length  Float?
   width   Float?
   height  Float?
 
+  addonName String? @db.VarChar(100)
   heightAddon Float?
 
-  image1  String
-  image2  String
-  image3  String
+  image1  String?
+  image2  String?
+  image3  String?
+
+  collectionId  Int
+  modelId Int
+}
+
+model Collection {
+  id Int @id @default(autoincrement())
+
+  createdAt DateTime  @default(now()) @map("create_time") @db.Timestamp(0)
+  updatedAt DateTime? @map("update_time") @db.Timestamp(0)
+  
+  name  String  @unique @db.VarChar(100)
+
+  products  Product[]
+}
+
+model Model {
+  id Int @id @default(autoincrement())
+
+  createdAt DateTime  @default(now()) @map("create_time") @db.Timestamp(0)
+  updatedAt DateTime? @map("update_time") @db.Timestamp(0)
+  
+  name  String  @unique @db.VarChar(100)
+
+  products  Product[]
 }
 
 enum Role {
