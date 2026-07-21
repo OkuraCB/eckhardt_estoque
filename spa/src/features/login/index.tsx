@@ -24,7 +24,7 @@ export const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -55,17 +55,16 @@ export const Login = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid container spacing={2} height="100%">
+      <Grid container spacing={2}>
         <Grid
+        size={{xs: 12}}
+        sx={{alignContent:"center",
+          justifyContent:"center", marginTop: 4}}
           container
-          item
-          xs={12}
-          marginTop={4}
-          alignContent="center"
-          justifyContent="center"
+    
         >
           <Card>
-            <Box p={4}>
+            <Box sx={{p: 4}}>
               <h1 style={{ marginTop: "6px" }}>Login</h1>
               <h5 style={{ marginBottom: "12px" }}>Insira suas credenciais</h5>
               {loading && (
@@ -81,7 +80,6 @@ export const Login = () => {
                   autoFocus
                   value={email}
                   variant="outlined"
-                  InputLabelProps={{ shrink: true }}
                   placeholder="Seu email"
                   onChange={(event) => setEmail(event.target.value)}
                   disabled={loading}
@@ -94,7 +92,6 @@ export const Login = () => {
                   autoFocus
                   value={pass}
                   variant="outlined"
-                  InputLabelProps={{ shrink: true }}
                   placeholder="Sua senha"
                   onChange={(event) => setPass(event.target.value)}
                   disabled={loading}

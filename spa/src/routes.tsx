@@ -76,7 +76,7 @@ const CheckLogin = ({ children }: { children: JSX.Element }) => {
       />
     );
 
-  const envToken = localStorage.getItem(process.env.REACT_TOKEN!);
+  const envToken = localStorage.getItem(import.meta.env.VITE_TOKEN!);
 
   if (envToken) {
     try {
@@ -98,11 +98,11 @@ const CheckLogin = ({ children }: { children: JSX.Element }) => {
         enqueueSnackbar("Sua sessão expirou, por favor entre novamente", {
           variant: "info",
         });
-        localStorage.removeItem(process.env.REACT_TOKEN!);
+        localStorage.removeItem(import.meta.env.VITE_TOKEN!);
         return <Navigate to="login" state={{ from: location }} replace />;
       }
     } catch (e) {
-      localStorage.removeItem(process.env.REACT_TOKEN!);
+      localStorage.removeItem(import.meta.env.VITE_TOKEN!);
       return <Navigate to="login" state={{ from: location }} replace />;
     }
   }
