@@ -29,7 +29,7 @@ export const Footer = forwardRef<HTMLElement, FooterProps>((_props, ref) => {
           }}
         >
           <footer>
-            <p>&copy; 202X Arthur Illa. Todos os direitos reservados.</p>
+            <p>&copy; 2026 Arthur Illa. Todos os direitos reservados.</p>
           </footer>
         </Box>
       </Container>

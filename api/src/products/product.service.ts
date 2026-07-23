@@ -11,19 +11,24 @@ export class ProductsService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: CreateProductDto) {
+    let {collectionName, modelName, ...sanitizedData} = data
+
+    collectionName = collectionName ?? "Sem Coleção"
+    modelName = modelName ?? "Sem Modelo"
+
     const newProduct = await this.prisma.product.create({
       data: {
-        ...data,
+        ...sanitizedData,
         collection: {
           connectOrCreate: {
-            where: { name: data.collectionName },
-            create: { name: data.collectionName },
+            where: { name: collectionName },
+            create: { name: collectionName },
           },
         },
         model: {
           connectOrCreate: {
-            where: { name: data.modelName },
-            create: { name: data.modelName },
+            where: { name: modelName },
+            create: { name: modelName },
           },
         },
       },
@@ -35,20 +40,25 @@ export class ProductsService {
   }
 
   async update(id: number, data: UpdateProductDto) {
+    let {collectionName, modelName, ...sanitizedData} = data
+
+    collectionName = collectionName ?? "Sem Coleção"
+    modelName = modelName ?? "Sem Modelo"
+
     const updatedProduct = await this.prisma.product.update({
       where: { id },
       data: {
-        ...data,
+        ...sanitizedData,
         collection: {
           connectOrCreate: {
-            where: { name: data.collectionName },
-            create: { name: data.collectionName },
+            where: { name: collectionName },
+            create: { name: collectionName },
           },
         },
         model: {
           connectOrCreate: {
-            where: { name: data.modelName },
-            create: { name: data.modelName },
+            where: { name: modelName },
+            create: { name: modelName },
           },
         },
       },

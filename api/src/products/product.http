@@ -1,0 +1,27 @@
+@BASE_URL=http://localhost:3000
+
+POST {{BASE_URL}}/api/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJUYXRhIiwiZW1haWwiOiJ0YXRhQHRlc3RlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg0ODIyMjkwLCJleHAiOjE3ODQ5MDg2OTB9.ePQsnKgQZv5MrFiUlEHVBA0Uuvvs9b1LUhmeGdfr8F8
+
+{
+    "name": "Grego",
+    "code": "2468101",
+    "price": 101,
+    "qty": 161,
+    "description": "grego grego grego",
+    "modelName": "Greg 3.0",
+    "addonName": "peixo",
+    "length": 21,
+    "width": 71,
+    "height": 61,
+    "heightAddon": 91,
+    "image1": "aaaaaaaooooo",
+    "image2": "bbbbbbbooooo",
+    "image3": "cccccccooooo"
+}
+
+###
+
+GET  {{BASE_URL}}/api/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJUYXRhIiwiZW1haWwiOiJ0YXRhQHRlc3RlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg0ODIyMjkwLCJleHAiOjE3ODQ5MDg2OTB9.ePQsnKgQZv5MrFiUlEHVBA0Uuvvs9b1LUhmeGdfr8F8

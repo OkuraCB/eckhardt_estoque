@@ -22,8 +22,9 @@ import { ProductDeleteError } from './errors/productDeleteError.error';
 import { ProductUpdateError } from './errors/productUpdateError.error';
 import { ProductsService } from './product.service';
 
-@UseGuards(JwtAuthGuard)
+
 @Controller('/api/products')
+@UseGuards(JwtAuthGuard)
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
 
@@ -45,6 +46,8 @@ export class ProductsController {
     } catch (e: any) {
       if (e instanceof ProductCreateError)
         throw new UnprocessableEntityException(e.message);
+    
+      console.log(e.message)
 
       throw new InternalServerErrorException(ErrorMessages.DEFAULT_MESSAGE);
     }
