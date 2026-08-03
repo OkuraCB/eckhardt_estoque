@@ -35,7 +35,9 @@ export const Login = () => {
 
             localStorage.setItem(import.meta.env.VITE_TOKEN!, req.data.access_token);
 
-            enqueueSnackbar("Login realizado com sucesso", { variant: "success" });
+            enqueueSnackbar("Login realizado com sucesso", {
+                variant: "success",
+            });
             navigate("/home");
         } catch (e: any) {
             console.log(e);
@@ -50,7 +52,11 @@ export const Login = () => {
             <Grid container spacing={2}>
                 <Grid
                     size={{ xs: 12 }}
-                    sx={{ alignContent: "center", justifyContent: "center", marginTop: 4 }}
+                    sx={{
+                        alignContent: "center",
+                        justifyContent: "center",
+                        marginTop: 4,
+                    }}
                     container
                 >
                     <Card>
