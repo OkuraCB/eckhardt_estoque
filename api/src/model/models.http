@@ -1,0 +1,9 @@
+@BASE_URL=http://localhost:3000/api
+
+POST {{BASE_URL}}/models
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJUYXRhIiwiZW1haWwiOiJ0YXRhQHRlc3RlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg1Nzc4MTgzLCJleHAiOjE3ODU4NjQ1ODN9.T9wJJr2-zEs-wnXRn9PJSnKzpF8t6OYyRwK6q0MD9H4
+
+{
+    "name": "Model 3"
+}

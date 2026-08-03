@@ -4,7 +4,6 @@ import { Pace, WindupChildren } from "windups";
 import { useAppSelector } from "../../app/hooks";
 import homepage from "../../assets/homepage.svg";
 import { selectUser } from "../users/usersSlice";
-import { TabelaDefaultDialog } from "./tabelaDefault";
 
 export const Home = () => {
     const user = useAppSelector(selectUser);
@@ -21,15 +20,15 @@ export const Home = () => {
                     <Grid>
                         <WindupChildren>
                             <Pace getPace={() => 60}>
-                                <span style={{ fontSize: 60 }}>Hi, {user.name}!</span>
+                                <span style={{ fontSize: 60 }}>Olá, {user.name}!</span>
                             </Pace>
                         </WindupChildren>
                     </Grid>
                     <Grid>
-                        <span>That's the template</span>
-                        <br />
-                        <br />
-                        <span>Good luck!</span>
+                        <span>
+                            Esse é o sistema de controle de estoque da Eckhardt & Eloy. Aqui você pode acessar o estoque
+                            atual atualizado, as vendas, e uma visão macro de todo o negócio.
+                        </span>
                     </Grid>
 
                     <Grid container spacing={2} sx={{ marginTop: 2, flexDirection: "row", justifyContent: "center" }}>
@@ -40,18 +39,17 @@ export const Home = () => {
                                     console.log("console found!");
                                 }}
                             >
-                                Console print
+                                Cadastrar Produto
                             </Button>
                         </Grid>
                         <Grid>
                             <Button
                                 variant="contained"
-                                color="secondary"
                                 onClick={() => {
-                                    setDialog(true);
+                                    console.log("console found!");
                                 }}
                             >
-                                Default Dialog
+                                Cadastrar Venda
                             </Button>
                         </Grid>
                     </Grid>
@@ -69,12 +67,6 @@ export const Home = () => {
                     <img src={homepage} width="60%" />
                 </Grid>
             </Grid>
-            <TabelaDefaultDialog
-                onClose={() => {
-                    setDialog(false);
-                }}
-                open={defaultDialog}
-            />
         </>
     );
 };
