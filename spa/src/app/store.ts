@@ -2,6 +2,7 @@ import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import collectionsReducer from "../features/collections/collectionsSlice";
 import modelsReducer from "../features/models/modelsSlice";
 import productsReducer from "../features/products/productSlice";
+import salesReducer from "../features/sales/salesSlice";
 import userReducer from "../features/users/usersSlice";
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
 		products: productsReducer,
 		collections: collectionsReducer,
 		models: modelsReducer,
+		sales: salesReducer
 	},
 });
 

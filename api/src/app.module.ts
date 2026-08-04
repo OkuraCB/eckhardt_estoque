@@ -10,6 +10,7 @@ import { CollectionsModule } from './collections/collection.module';
 import { LogModule } from './logs/log.module';
 import { ModelsModule } from './model/model.module';
 import { ProductsModule } from './products/product.module';
+import { SalesModule } from './sales/sale.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -20,6 +21,7 @@ import { UsersModule } from './users/users.module';
     CollectionsModule,
     ModelsModule,
     ProductsModule,
+    SalesModule
   ],
   controllers: [],
   providers: [

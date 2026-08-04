@@ -6,8 +6,6 @@ export const createProductApi = async (data: ICreateProduct): Promise<AxiosRespo
     const { image1, image2, image3, ...sanitizedData } = data;
     // const files = new FormData();
 
-    console.log(sanitizedData);
-
     const req = await axiosInstance.post(`/products`, sanitizedData);
 
     return req;

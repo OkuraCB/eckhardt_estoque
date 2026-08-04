@@ -75,7 +75,7 @@ export const modelsSlice = createSlice({
 			.addCase(createModel.fulfilled, (state, { payload }: any) => {
 				state.status = "idle";
 
-				state.models = [...state.models, payload.product[0]];
+				state.models = [...state.models, payload];
 
 				handleSnackbar("Modelo criado com sucesso!", "success");
 			});

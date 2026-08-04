@@ -3,6 +3,8 @@ import { createProductApi, deleteProductApi, listProductsApi } from "../../api/p
 import { RootState } from "../../app/store";
 import { customReject } from "../../common/customReject";
 import { handleSnackbar } from "../../common/handleSnackbar";
+import { ICollection } from "../collections/collectionsSlice";
+import { IModel } from "../models/modelsSlice";
 
 export interface ICreateProduct {
     name: string;
@@ -29,8 +31,8 @@ export interface IProduct {
     price: number;
     qty: number;
     description: string | null;
-    collectionName: string | null;
-    modelName: string | null;
+    collection: ICollection | null;
+    model: IModel | null;
     addonName: string | null;
     length: number | null;
     width: number | null;
@@ -67,7 +69,6 @@ export const deleteProduct = createAsyncThunk("products/delete", async (id: numb
 
 export const createProduct = createAsyncThunk("product/create", async (data: ICreateProduct, { rejectWithValue }) => {
     try {
-        console.log(data);
         const res = await createProductApi(data);
         return res.data;
     } catch (e: any) {
@@ -78,7 +79,17 @@ export const createProduct = createAsyncThunk("product/create", async (data: ICr
 export const productsSlice = createSlice({
     name: "products",
     initialState,
-    reducers: {},
+    reducers: {
+        sellProduct: (state, action) => {
+            const {productId} = action.payload
+            const index = state.products.findIndex((obj)=>obj.id === productId)
+            const product = state.products[index]
+            state.products[index].qty = product.qty-1
+
+            handleSnackbar(`${product.qty} -> ${product.qty-1}`, "success", 5000)
+            handleSnackbar("Quantidade alterada em "+ product.name, "success", 5000)
+        }
+    },
     extraReducers: builder => {
         builder
             .addCase(createProduct.rejected, (state, { payload: { message } }: any) => {
@@ -130,4 +141,5 @@ export const productsSlice = createSlice({
 
 export const selectProducts = (state: RootState) => state.products.products;
 
+export const {sellProduct} = productsSlice.actions
 export default productsSlice.reducer;

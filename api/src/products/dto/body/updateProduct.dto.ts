@@ -15,6 +15,10 @@ export class UpdateProductDto {
 
   @IsOptional()
   @IsNumber()
+  cost: number;
+
+  @IsOptional()
+  @IsNumber()
   qty: number;
 
   @IsOptional()

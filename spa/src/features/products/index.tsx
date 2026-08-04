@@ -1,23 +1,17 @@
-import { Box, Button, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import { Pace, WindupChildren } from "windups";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import productsSvg from "../../assets/products.svg";
+import { SalesDialog } from "../sales/saleDialog";
 import { ProductDialog } from "./productDialog";
-import { selectProducts } from "./productSlice";
+import { ProductsTable } from "./table/table";
 
 export const Products = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-    const dispatch = useAppDispatch();
-
-    const products = useAppSelector(selectProducts);
-
     const [productDialog, setProductDialog] = useState<boolean>(false);
-
-    // useEffect(() => {
-    // 	dispatch(listProducts());
-    // }, []);
+    const [saleDialog, setSaleDialog] = useState<boolean>(false)
 
     return (
         <>
@@ -60,36 +54,8 @@ export const Products = () => {
                     </Grid>
                     <Grid>
                         <span>
-                            Nessa página você pode administrar seus documentos, adicionar novos e conferir os que já
-                            estão cadastrados. Não se esqueça de enviar o arquivo compactado para sua instituição ao fim
-                            do curso.
+                            Nessa página você pode conferir todos os produtos cadastrados no sistema, adicionar novas vendas ou novas entradas na base de dados e apagar produtos que se tornaram obsoletos.
                         </span>
-                        <span></span>
-                    </Grid>
-                    <Grid
-                        container
-                        spacing={2}
-                        sx={{
-                            marginTop: 2,
-                            flexDirection: "row",
-                            justifyContent: "center",
-                        }}
-                    >
-                        <Grid sx={{ mb: 5 }}>
-                            <Button
-                                variant="contained"
-                                onClick={() => {
-                                    setProductDialog(true);
-                                }}
-                                size={isMobile ? "large" : "medium"}
-                                sx={{
-                                    width: isMobile ? "100%" : "auto",
-                                    maxWidth: 300,
-                                }}
-                            >
-                                Cadastrar Produto
-                            </Button>
-                        </Grid>
                     </Grid>
                 </Grid>
                 <Grid
@@ -102,7 +68,9 @@ export const Products = () => {
                         mt: isMobile ? 0 : 2,
                     }}
                     size={{ sm: 6, xs: 12 }}
-                ></Grid>
+                >
+                    <img src={productsSvg} width="80%" />
+                </Grid>
                 <Grid
                     container
                     sx={{
@@ -113,16 +81,21 @@ export const Products = () => {
                         justifyItems: "center",
                     }}
                 >
-                    <Box sx={{ maxWidth: "90%" }}>
-                        <></>
+                    <Box sx={{ maxWidth: "100%" }}>
+                        <ProductsTable setProductDialog={setProductDialog} setSaleDialog={setSaleDialog}/>
                     </Box>
                 </Grid>
             </Grid>
-
             <ProductDialog
                 open={productDialog}
                 onClose={() => {
                     setProductDialog(false);
+                }}
+            />
+            <SalesDialog
+                open={saleDialog}
+                onClose={() => {
+                    setSaleDialog(false);
                 }}
             />
         </>

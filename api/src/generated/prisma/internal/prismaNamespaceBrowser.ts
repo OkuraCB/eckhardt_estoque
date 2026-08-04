@@ -55,7 +55,8 @@ export const ModelName = {
   User: 'User',
   Product: 'Product',
   Collection: 'Collection',
-  Model: 'Model'
+  Model: 'Model',
+  Sale: 'Sale'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -107,6 +108,7 @@ export const ProductScalarFieldEnum = {
   price: 'price',
   qty: 'qty',
   description: 'description',
+  cost: 'cost',
   length: 'length',
   width: 'width',
   height: 'height',
@@ -140,6 +142,18 @@ export const ModelScalarFieldEnum = {
 } as const
 
 export type ModelScalarFieldEnum = (typeof ModelScalarFieldEnum)[keyof typeof ModelScalarFieldEnum]
+
+
+export const SaleScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  email: 'email',
+  phone: 'phone',
+  name: 'name',
+  productId: 'productId'
+} as const
+
+export type SaleScalarFieldEnum = (typeof SaleScalarFieldEnum)[keyof typeof SaleScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -199,4 +213,13 @@ export const ModelOrderByRelevanceFieldEnum = {
 } as const
 
 export type ModelOrderByRelevanceFieldEnum = (typeof ModelOrderByRelevanceFieldEnum)[keyof typeof ModelOrderByRelevanceFieldEnum]
+
+
+export const SaleOrderByRelevanceFieldEnum = {
+  email: 'email',
+  phone: 'phone',
+  name: 'name'
+} as const
+
+export type SaleOrderByRelevanceFieldEnum = (typeof SaleOrderByRelevanceFieldEnum)[keyof typeof SaleOrderByRelevanceFieldEnum]
 

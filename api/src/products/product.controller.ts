@@ -42,6 +42,7 @@ export class ProductsController {
   @Serialize(ProductDto)
   async createProduct(@Body() body: CreateProductDto) {
     try {
+      console.log(body)
       return await this.productsService.create(body);
     } catch (e: any) {
       if (e instanceof ProductCreateError)

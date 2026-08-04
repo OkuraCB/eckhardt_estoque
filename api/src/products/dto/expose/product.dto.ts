@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
-import { ModelDto } from '../../../model/dto/expose/model.dto';
 import { CollectionDto } from '../../../collections/dto/expose/collection.dto';
+import { ModelDto } from '../../../model/dto/expose/model.dto';
 
 export class ProductDto {
   @Expose()
@@ -13,7 +13,10 @@ export class ProductDto {
   code: string;
 
   @Expose()
-  value: number;
+  price: number;
+
+  @Expose()
+  cost: number;
 
   @Expose()
   qty: number;

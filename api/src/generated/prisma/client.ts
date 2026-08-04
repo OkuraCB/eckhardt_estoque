@@ -64,3 +64,8 @@ export type Collection = Prisma.CollectionModel
  * 
  */
 export type Model = Prisma.ModelModel
+/**
+ * Model Sale
+ * 
+ */
+export type Sale = Prisma.SaleModel

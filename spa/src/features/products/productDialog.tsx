@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { handleFloat, handleNumberOnly } from "../../common/handleNumbers";
+import { handleSnackbar } from "../../common/handleSnackbar";
 import { ConfirmationDialog } from "../../components/ConfirmationDialog";
 import { listCollections, selectCollections } from "../collections/collectionsSlice";
 import { listModels, selectModels } from "../models/modelsSlice";
@@ -42,6 +43,7 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
     const [name, setName] = useState<string>("");
     const [code, setCode] = useState<string>("");
     const [price, setPrice] = useState<number>(0);
+    const [cost, setCost] = useState<number>(0);
     const [qty, setQty] = useState<number>(0);
     const [description, setDescription] = useState<string>("");
     const [collection, setCollection] = useState<string | null>(null);
@@ -64,6 +66,7 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
         setName("");
         setCode("");
         setPrice(0);
+        setCost(0)
         setQty(0);
         setDescription("");
         setCollection(null);
@@ -85,6 +88,7 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
                 code,
                 price,
                 qty,
+                cost,
                 description,
                 length,
                 width,
@@ -104,6 +108,11 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
             } catch (e) {
                 handleClose();
             }
+
+        } else {
+            if (!name) handleSnackbar("NOME não pode ser vazio", "error")
+            if (!price) handleSnackbar("PREÇO não pode ser vazio", "error")
+            if (!qty) handleSnackbar("QUANTIDADE não pode ser vazio", "error")
         }
     };
 
@@ -115,8 +124,8 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
     };
 
     const handleSendDisabled = () => {
-        if (name! || price! || qty!) return false;
-        return true;
+        if (name! || price == 0 || qty!) return true;
+        return false;
     };
 
     return (
@@ -179,6 +188,47 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
                             />
                         </Grid>
                         <Grid size={{ xs: 3 }}>
+                            <TextField
+                                label="Preço"
+                                slotProps={{
+                                    input: {
+                                        endAdornment: <InputAdornment position="start">R$</InputAdornment>,
+                                    },
+                                }}
+                                variant="outlined"
+                                required
+                                fullWidth
+                                value={price}
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                    handleFloat(event, setPrice);
+                                }}
+                            />
+                        </Grid>
+                        <Grid size={{ xs: 3 }}>
+                            <TextField
+                                label="Custo de Produção"
+                                variant="outlined"
+                                required
+                                fullWidth
+                                value={cost}
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                    handleNumberOnly(event, setCost);
+                                }}
+                            />
+                        </Grid>
+                        <Grid size={{ xs: 2 }}>
+                            <TextField
+                                label="Quantidade"
+                                variant="outlined"
+                                required
+                                fullWidth
+                                value={qty}
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                    handleNumberOnly(event, setQty);
+                                }}
+                            />
+                        </Grid>
+                        <Grid size={{ xs: 4 }}>
                             <Autocomplete
                                 freeSolo
                                 resetHighlightOnMouseLeave
@@ -196,36 +246,7 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
                                 }
                             />
                         </Grid>
-                        <Grid size={{ xs: 3 }}>
-                            <TextField
-                                label="Preço"
-                                slotProps={{
-                                    input: {
-                                        endAdornment: <InputAdornment position="start">R$</InputAdornment>,
-                                    },
-                                }}
-                                variant="outlined"
-                                required
-                                fullWidth
-                                value={price}
-                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                    handleFloat(event, setPrice);
-                                }}
-                            />
-                        </Grid>
-                        <Grid size={{ xs: 2 }}>
-                            <TextField
-                                label="Quantidade"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                value={qty}
-                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                    handleNumberOnly(event, setQty);
-                                }}
-                            />
-                        </Grid>
-                        <Grid size={{ xs: 4 }}>
+                        <Grid size={{ xs: 8 }}>
                             <TextField
                                 label="Adicional"
                                 variant="outlined"
@@ -236,7 +257,7 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
                                 }}
                             />
                         </Grid>
-                        <Grid size={{ xs: 2 }}>
+                        <Grid size={{ xs: 3 }}>
                             <TextField
                                 label="Comprimento"
                                 variant="outlined"
@@ -247,7 +268,7 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
                                 }}
                             />
                         </Grid>
-                        <Grid size={{ xs: 2 }}>
+                        <Grid size={{ xs: 3 }}>
                             <TextField
                                 label="Largura"
                                 variant="outlined"
@@ -258,7 +279,7 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
                                 }}
                             />
                         </Grid>
-                        <Grid size={{ xs: 2 }}>
+                        <Grid size={{ xs: 3 }}>
                             <TextField
                                 label="Altura"
                                 variant="outlined"
@@ -269,7 +290,7 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
                                 }}
                             />
                         </Grid>
-                        <Grid size={{ xs: 2 }}>
+                        <Grid size={{ xs: 3 }}>
                             <TextField
                                 label="Altura (com adicional)"
                                 variant="outlined"
@@ -298,7 +319,9 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
                     <Button variant="contained" color="secondary" onClick={handleClose}>
                         Cancelar
                     </Button>
-                    <Button disabled={handleSendDisabled()} variant="contained" onClick={() => setConfirm(true)}>
+                    <Button 
+                        //disabled={handleSendDisabled()} 
+                        variant="contained" onClick={() => setConfirm(true)}>
                         Enviar
                     </Button>
                 </DialogActions>

@@ -13,6 +13,10 @@ export class CreateProductDto {
   @IsNumber()
   price: number;
 
+  @IsOptional()
+  @IsNumber()
+  cost: number;
+
   @IsNotEmpty({ message: 'Quantity should not be empty' })
   @IsNumber()
   qty: number;

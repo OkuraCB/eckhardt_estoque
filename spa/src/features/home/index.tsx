@@ -3,11 +3,15 @@ import { useState } from "react";
 import { Pace, WindupChildren } from "windups";
 import { useAppSelector } from "../../app/hooks";
 import homepage from "../../assets/homepage.svg";
+import { ProductDialog } from "../products/productDialog";
+import { SalesDialog } from "../sales/saleDialog";
 import { selectUser } from "../users/usersSlice";
 
 export const Home = () => {
     const user = useAppSelector(selectUser);
-    const [defaultDialog, setDialog] = useState<boolean>(false);
+
+    const [productDialog, setProductDialog] = useState<boolean>(false)
+    const [saleDialog, setSaleDialog] = useState<boolean>(false)
 
     return (
         <>
@@ -36,7 +40,7 @@ export const Home = () => {
                             <Button
                                 variant="contained"
                                 onClick={() => {
-                                    console.log("console found!");
+                                    setProductDialog(true)
                                 }}
                             >
                                 Cadastrar Produto
@@ -45,11 +49,12 @@ export const Home = () => {
                         <Grid>
                             <Button
                                 variant="contained"
+                                color="secondary"
                                 onClick={() => {
-                                    console.log("console found!");
+                                    setSaleDialog(true)
                                 }}
                             >
-                                Cadastrar Venda
+                                Registrar Venda
                             </Button>
                         </Grid>
                     </Grid>
@@ -67,6 +72,19 @@ export const Home = () => {
                     <img src={homepage} width="60%" />
                 </Grid>
             </Grid>
+
+            <ProductDialog
+                open={productDialog}
+                onClose={() => {
+                    setProductDialog(false);
+                }}
+            />
+            <SalesDialog
+                open={saleDialog}
+                onClose={() => {
+                    setSaleDialog(false);
+                }}
+            />
         </>
     );
 };
