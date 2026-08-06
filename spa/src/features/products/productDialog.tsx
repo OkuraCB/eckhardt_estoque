@@ -9,7 +9,7 @@ import {
     InputAdornment,
     TextField,
     useMediaQuery,
-    useTheme,
+    useTheme
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -26,6 +26,8 @@ interface ProductDialogProps {
     open: boolean;
     tab?: number;
 }
+
+const acceptTypes = ".jpeg, .jpg, .png, .webp";
 
 export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
     const theme = useTheme();
@@ -312,7 +314,42 @@ export const ProductDialog = ({ onClose, open }: ProductDialogProps) => {
                                 }}
                             />
                         </Grid>
-                        //TODO IMAGES
+                        <Grid size={{xs: 4}}>
+                            <TextField
+                                fullWidth
+                                label="Foto 1"
+                                type="file"
+                                onChange={(event: any) => {
+                                    setImage1(event.target.files[0]);
+                                }}
+                                slotProps={{htmlInput: {accept: acceptTypes}, inputLabel: {shrink: true}}}
+                                required
+                            />
+                        </Grid>
+                        <Grid size={{xs: 4}}>
+                            <TextField
+                                fullWidth
+                                label="Foto 2"
+                                type="file"
+                                onChange={(event: any) => {
+                                    setImage2(event.target.files[0]);
+                                }}
+                                slotProps={{htmlInput: {accept: acceptTypes}, inputLabel: {shrink: true}}}
+                                required
+                            />
+                        </Grid>
+                        <Grid size={{xs: 4}}>
+                            <TextField
+                                fullWidth
+                                label="Foto 3"
+                                type="file"
+                                onChange={(event: any) => {
+                                    setImage3(event.target.files[0]);
+                                }}
+                                slotProps={{htmlInput: {accept: acceptTypes}, inputLabel: {shrink: true}}}
+                                required
+                            />
+                        </Grid>
                     </Grid>
                 </DialogContent>
                 <DialogActions>

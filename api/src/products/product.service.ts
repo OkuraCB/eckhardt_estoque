@@ -10,7 +10,7 @@ import { ProductUpdateError } from './errors/productUpdateError.error';
 export class ProductsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateProductDto) {
+  async create(images: Express.Multer.File[], data: CreateProductDto) {
     let { collectionName, modelName, ...sanitizedData } = data;
 
     collectionName = collectionName ?? 'Sem Coleção';
