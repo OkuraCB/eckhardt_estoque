@@ -1,6 +1,7 @@
 import { Expose } from 'class-transformer';
 import { CollectionDto } from '../../../collections/dto/expose/collection.dto';
 import { ModelDto } from '../../../model/dto/expose/model.dto';
+import { ImageDto } from './image.dto';
 
 export class ProductDto {
   @Expose()
@@ -46,11 +47,11 @@ export class ProductDto {
   addonName: string;
 
   @Expose()
-  image1: string;
+  image1: ImageDto;
 
   @Expose()
-  image2: string;
+  image2: ImageDto;
 
   @Expose()
-  image3: string;
+  image3: ImageDto;
 }

@@ -2,7 +2,7 @@
 
 POST {{BASE_URL}}/api/products
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJUYXRhIiwiZW1haWwiOiJ0YXRhQHRlc3RlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg0ODIyMjkwLCJleHAiOjE3ODQ5MDg2OTB9.ePQsnKgQZv5MrFiUlEHVBA0Uuvvs9b1LUhmeGdfr8F8
+Authorization: {{accessToken}}
 
 {
     "name": "Grego",
@@ -24,4 +24,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiO
 ###
 
 GET  {{BASE_URL}}/api/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJUYXRhIiwiZW1haWwiOiJ0YXRhQHRlc3RlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg1Nzc4MTgzLCJleHAiOjE3ODU4NjQ1ODN9.T9wJJr2-zEs-wnXRn9PJSnKzpF8t6OYyRwK6q0MD9H4
+Authorization: {{accessToken}}

@@ -195,7 +195,7 @@ export type SaleGroupByOutputType = {
   email: string | null
   phone: string | null
   name: string | null
-  productId: number
+  productId: number | null
   _count: SaleCountAggregateOutputType | null
   _avg: SaleAvgAggregateOutputType | null
   _sum: SaleSumAggregateOutputType | null
@@ -227,8 +227,8 @@ export type SaleWhereInput = {
   email?: Prisma.StringNullableFilter<"Sale"> | string | null
   phone?: Prisma.StringNullableFilter<"Sale"> | string | null
   name?: Prisma.StringNullableFilter<"Sale"> | string | null
-  productId?: Prisma.IntFilter<"Sale"> | number
-  product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
+  productId?: Prisma.IntNullableFilter<"Sale"> | number | null
+  product?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
 }
 
 export type SaleOrderByWithRelationInput = {
@@ -237,7 +237,7 @@ export type SaleOrderByWithRelationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
-  productId?: Prisma.SortOrder
+  productId?: Prisma.SortOrderInput | Prisma.SortOrder
   product?: Prisma.ProductOrderByWithRelationInput
   _relevance?: Prisma.SaleOrderByRelevanceInput
 }
@@ -251,8 +251,8 @@ export type SaleWhereUniqueInput = Prisma.AtLeast<{
   email?: Prisma.StringNullableFilter<"Sale"> | string | null
   phone?: Prisma.StringNullableFilter<"Sale"> | string | null
   name?: Prisma.StringNullableFilter<"Sale"> | string | null
-  productId?: Prisma.IntFilter<"Sale"> | number
-  product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
+  productId?: Prisma.IntNullableFilter<"Sale"> | number | null
+  product?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
 }, "id">
 
 export type SaleOrderByWithAggregationInput = {
@@ -261,7 +261,7 @@ export type SaleOrderByWithAggregationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
-  productId?: Prisma.SortOrder
+  productId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SaleCountOrderByAggregateInput
   _avg?: Prisma.SaleAvgOrderByAggregateInput
   _max?: Prisma.SaleMaxOrderByAggregateInput
@@ -278,7 +278,7 @@ export type SaleScalarWhereWithAggregatesInput = {
   email?: Prisma.StringNullableWithAggregatesFilter<"Sale"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"Sale"> | string | null
   name?: Prisma.StringNullableWithAggregatesFilter<"Sale"> | string | null
-  productId?: Prisma.IntWithAggregatesFilter<"Sale"> | number
+  productId?: Prisma.IntNullableWithAggregatesFilter<"Sale"> | number | null
 }
 
 export type SaleCreateInput = {
@@ -286,7 +286,7 @@ export type SaleCreateInput = {
   email?: string | null
   phone?: string | null
   name?: string | null
-  product: Prisma.ProductCreateNestedOneWithoutSalesInput
+  product?: Prisma.ProductCreateNestedOneWithoutSalesInput
 }
 
 export type SaleUncheckedCreateInput = {
@@ -295,7 +295,7 @@ export type SaleUncheckedCreateInput = {
   email?: string | null
   phone?: string | null
   name?: string | null
-  productId: number
+  productId?: number | null
 }
 
 export type SaleUpdateInput = {
@@ -303,7 +303,7 @@ export type SaleUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  product?: Prisma.ProductUpdateOneRequiredWithoutSalesNestedInput
+  product?: Prisma.ProductUpdateOneWithoutSalesNestedInput
 }
 
 export type SaleUncheckedUpdateInput = {
@@ -312,7 +312,7 @@ export type SaleUncheckedUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  productId?: Prisma.IntFieldUpdateOperationsInput | number
+  productId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type SaleCreateManyInput = {
@@ -321,7 +321,7 @@ export type SaleCreateManyInput = {
   email?: string | null
   phone?: string | null
   name?: string | null
-  productId: number
+  productId?: number | null
 }
 
 export type SaleUpdateManyMutationInput = {
@@ -337,7 +337,7 @@ export type SaleUncheckedUpdateManyInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  productId?: Prisma.IntFieldUpdateOperationsInput | number
+  productId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type SaleListRelationFilter = {
@@ -435,6 +435,14 @@ export type SaleUncheckedUpdateManyWithoutProductNestedInput = {
   deleteMany?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[]
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type SaleCreateWithoutProductInput = {
   createdAt?: Date | string
   email?: string | null
@@ -485,7 +493,7 @@ export type SaleScalarWhereInput = {
   email?: Prisma.StringNullableFilter<"Sale"> | string | null
   phone?: Prisma.StringNullableFilter<"Sale"> | string | null
   name?: Prisma.StringNullableFilter<"Sale"> | string | null
-  productId?: Prisma.IntFilter<"Sale"> | number
+  productId?: Prisma.IntNullableFilter<"Sale"> | number | null
 }
 
 export type SaleCreateManyProductInput = {
@@ -528,7 +536,7 @@ export type SaleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   phone?: boolean
   name?: boolean
   productId?: boolean
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  product?: boolean | Prisma.Sale$productArgs<ExtArgs>
 }, ExtArgs["result"]["sale"]>
 
 
@@ -544,13 +552,13 @@ export type SaleSelectScalar = {
 
 export type SaleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "email" | "phone" | "name" | "productId", ExtArgs["result"]["sale"]>
 export type SaleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  product?: boolean | Prisma.Sale$productArgs<ExtArgs>
 }
 
 export type $SalePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Sale"
   objects: {
-    product: Prisma.$ProductPayload<ExtArgs>
+    product: Prisma.$ProductPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -558,7 +566,7 @@ export type $SalePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string | null
     phone: string | null
     name: string | null
-    productId: number
+    productId: number | null
   }, ExtArgs["result"]["sale"]>
   composites: {}
 }
@@ -899,7 +907,7 @@ readonly fields: SaleFieldRefs;
  */
 export interface Prisma__SaleClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  product<T extends Prisma.Sale$productArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Sale$productArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1158,7 +1166,7 @@ export type SaleCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   /**
    * The data needed to create a Sale.
    */
-  data: Prisma.XOR<Prisma.SaleCreateInput, Prisma.SaleUncheckedCreateInput>
+  data?: Prisma.XOR<Prisma.SaleCreateInput, Prisma.SaleUncheckedCreateInput>
 }
 
 /**
@@ -1280,6 +1288,25 @@ export type SaleDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Sales to delete.
    */
   limit?: number
+}
+
+/**
+ * Sale.product
+ */
+export type Sale$productArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Product
+   */
+  select?: Prisma.ProductSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Product
+   */
+  omit?: Prisma.ProductOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductInclude<ExtArgs> | null
+  where?: Prisma.ProductWhereInput
 }
 
 /**

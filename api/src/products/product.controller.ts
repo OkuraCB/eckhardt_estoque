@@ -15,7 +15,7 @@ import {
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { promises } from 'fs';
-import { diskStorage } from "multer";
+import { diskStorage } from 'multer';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ErrorMessages } from '../common/enums/errorMessages';
 import { filesConfig } from '../config/fileConfig';
@@ -28,7 +28,6 @@ import { ProductCreateError } from './errors/productCreateError.error';
 import { ProductDeleteError } from './errors/productDeleteError.error';
 import { ProductUpdateError } from './errors/productUpdateError.error';
 import { ProductsService } from './product.service';
-
 
 @Controller('/api/products')
 @UseGuards(JwtAuthGuard)
@@ -50,43 +49,46 @@ export class ProductsController {
   @UseInterceptors(
     FileFieldsInterceptor(
       [
-        {name: 'image1', maxCount: 1},
-        {name: 'image2', maxCount: 1},
-        {name: 'image3', maxCount: 1}
+        { name: 'image1', maxCount: 1 },
+        { name: 'image2', maxCount: 1 },
+        { name: 'image3', maxCount: 1 },
       ],
       {
         storage: diskStorage({
-          destination: "files",
-            filename: function (_req, file, cb) {
-              console.log(file.originalname)
-              cb(null, file.originalname)
-            },
-        })
-      }
-    )
+          destination: 'files',
+          filename: function (_req, file, cb) {
+            cb(null, file.originalname);
+          },
+        }),
+      },
+    ),
   )
-  async createProduct(@UploadedFiles() 
+  async createProduct(
+    @UploadedFiles()
     files: {
-      image1?: Express.Multer.File[]; 
-      image2?: Express.Multer.File[]; 
-      image3?: Express.Multer.File[]
+      image1?: Express.Multer.File[];
+      image2?: Express.Multer.File[];
+      image3?: Express.Multer.File[];
     },
-    @Body() body: {body: string}) {
+    @Body() body: { body: string },
+  ) {
     try {
       const MAX_SIZE = parseInt(filesConfig.useFactory().maxSize);
       const TOTAL_SIZE = parseInt(filesConfig.useFactory().totalSize);
 
-      const images: Express.Multer.File[] = [files.image1[0], files.image2[0], files.image3[0]]
+      const images: Express.Multer.File[] = [];
+      if (files.image1) images.push(files.image1[0]);
+      if (files.image2) images.push(files.image2[0]);
+      if (files.image3) images.push(files.image3[0]);
 
-      let totalSize = 0
+      let totalSize = 0;
       for (const image of images) {
-        console.log(image.size)
-        if (image.size > MAX_SIZE) throw new FileExceedMaxSizeError()
-        
-          totalSize+=image.size
+        if (image.size > MAX_SIZE) throw new FileExceedMaxSizeError();
+
+        totalSize += image.size;
       }
 
-      if (totalSize > TOTAL_SIZE) throw new FileExceedTotalSizeError()
+      if (totalSize > TOTAL_SIZE) throw new FileExceedTotalSizeError();
 
       return await this.productsService.create(images, JSON.parse(body.body));
     } catch (e: any) {
@@ -94,7 +96,11 @@ export class ProductsController {
       if (files.image2) await promises.rm(files.image2[0].path);
       if (files.image3) await promises.rm(files.image3[0].path);
 
-      if (e instanceof ProductCreateError || e instanceof FileExceedMaxSizeError || e instanceof FileExceedTotalSizeError)
+      if (
+        e instanceof ProductCreateError ||
+        e instanceof FileExceedMaxSizeError ||
+        e instanceof FileExceedTotalSizeError
+      )
         throw new UnprocessableEntityException(e.message);
 
       throw new InternalServerErrorException(ErrorMessages.DEFAULT_MESSAGE);

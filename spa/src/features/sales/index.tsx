@@ -1,16 +1,14 @@
 import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import { Pace, WindupChildren } from "windups";
-import productsSvg from "../../assets/products.svg";
-import { SalesDialog } from "../sales/saleDialog";
-import { ProductDialog } from "./productDialog";
-import { ProductsTable } from "./table/table";
+import salesSvg from "../../assets/sales.svg";
+import { SalesDialog } from "./saleDialog";
+import { SalesTable } from "./table/table";
 
-export const Products = () => {
+export const Sales = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [productDialog, setProductDialog] = useState<boolean>(false);
   const [saleDialog, setSaleDialog] = useState<boolean>(false);
 
   return (
@@ -46,7 +44,7 @@ export const Products = () => {
                       lineHeight: 1.2,
                     }}
                   >
-                    Meus produtos
+                    Minhas vendas
                   </Typography>
                 </Pace>
               </WindupChildren>
@@ -54,9 +52,8 @@ export const Products = () => {
           </Grid>
           <Grid>
             <span>
-              Nessa página você pode conferir todos os produtos cadastrados no
-              sistema, adicionar novas vendas ou novas entradas na base de dados
-              e apagar produtos que se tornaram obsoletos.
+              Aqui você pode conferir as vendas registradas, bem como nome,
+              email e telefone de seus compradores!
             </span>
           </Grid>
         </Grid>
@@ -71,7 +68,7 @@ export const Products = () => {
           }}
           size={{ sm: 6, xs: 12 }}
         >
-          <img src={productsSvg} width="80%" />
+          <img src={salesSvg} width="60%" />
         </Grid>
         <Grid
           container
@@ -82,21 +79,14 @@ export const Products = () => {
             justifyContent: "center",
             justifyItems: "center",
           }}
+          size={{ xs: 12 }}
         >
-          <Box sx={{ maxWidth: "100%" }}>
-            <ProductsTable
-              setProductDialog={setProductDialog}
-              setSaleDialog={setSaleDialog}
-            />
+          <Box sx={{ width: "100%" }}>
+            <SalesTable setSaleDialog={setSaleDialog} />
           </Box>
         </Grid>
       </Grid>
-      <ProductDialog
-        open={productDialog}
-        onClose={() => {
-          setProductDialog(false);
-        }}
-      />
+
       <SalesDialog
         open={saleDialog}
         onClose={() => {

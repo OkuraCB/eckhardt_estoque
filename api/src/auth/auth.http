@@ -4,7 +4,7 @@ POST {{BASE_URL}}/auth/signin
 Content-Type: application/json
 
 {
-    "email": "tata@teste.com",
+    "email": "arthur@teste.com",
     "password": "1234"
 }
 
@@ -14,7 +14,7 @@ POST {{BASE_URL}}/auth/signup
 Content-Type: application/json
 
 {
-    "name": "Tata",
-    "email": "tata@teste.com",
+    "name": "Arthur",
+    "email": "arthur@teste.com",
     "password": "1234"
 }

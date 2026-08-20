@@ -10,16 +10,25 @@ export class SalesService {
 
   async create(data: CreateSaleDto, productId: number) {
     const newSale = await this.prisma.sale.create({
-      data: {...data, product: {
-        connect: {
-          id: productId
-        }
-      }}, include: {product: {select: {qty: true}}}
+      data: {
+        ...data,
+        product: {
+          connect: {
+            id: productId,
+          },
+        },
+      },
+      include: {
+        product: { select: { name: true, cost: true, price: true, qty: true } },
+      },
     });
 
     if (!newSale) throw new SaleCreationError();
 
-    await this.prisma.product.update({where:{id: productId},data:{qty: newSale.product.qty-1}})
+    await this.prisma.product.update({
+      where: { id: productId },
+      data: { qty: newSale.product.qty - 1 },
+    });
 
     return newSale;
   }
@@ -35,7 +44,11 @@ export class SalesService {
   }
 
   async list() {
-    const sales = await this.prisma.sale.findMany();
+    const sales = await this.prisma.sale.findMany({
+      include: {
+        product: { select: { name: true, cost: true, price: true, qty: true } },
+      },
+    });
 
     if (sales.length < 1) return [];
 

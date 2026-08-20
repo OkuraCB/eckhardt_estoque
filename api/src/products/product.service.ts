@@ -5,6 +5,9 @@ import { UpdateProductDto } from './dto/body/updateProduct.dto';
 import { ProductCreateError } from './errors/productCreateError.error';
 import { ProductDeleteError } from './errors/productDeleteError.error';
 import { ProductUpdateError } from './errors/productUpdateError.error';
+import mime from 'mime';
+import { readFileSync } from 'node:fs';
+import fileLoader from '../config/loaders/fileLoader';
 
 @Injectable()
 export class ProductsService {
@@ -32,13 +35,58 @@ export class ProductsService {
               create: { name: modelName },
             },
           },
+          image1: images[0] ? images[0].filename : '',
+          image2: images[1] ? images[1].filename : '',
+          image3: images[2] ? images[2].filename : '',
+        },
+        include: {
+          collection: true,
+          model: true,
         },
       });
 
       if (!newProduct) throw new ProductCreateError();
 
-      return newProduct;
+      const imagesLength = images.length;
+      const imageBuffers = [];
+
+      for (const image of images) {
+        imageBuffers.push(
+          readFileSync(fileLoader().filesDir + '/' + image.filename),
+        );
+      }
+
+      const prodImages = {
+        ...newProduct,
+        image1:
+          imagesLength >= 1
+            ? {
+                data: imageBuffers[0].toString('base64'),
+                filename: images[0].filename,
+                mimetype: images[0].mimetype,
+              }
+            : null,
+        image2:
+          imagesLength >= 2
+            ? {
+                data: imageBuffers[1].toString('base64'),
+                filename: images[1].filename,
+                mimetype: images[1].mimetype,
+              }
+            : null,
+        image3:
+          imagesLength == 3
+            ? {
+                data: imageBuffers[2].toString('base64'),
+                filename: images[2].filename,
+                mimetype: images[2].mimetype,
+              }
+            : null,
+      };
+
+      return prodImages;
     } catch (e) {
+      console.log(e);
       throw new ProductCreateError();
     }
   }
@@ -90,6 +138,41 @@ export class ProductsService {
 
     if (products.length < 1) return [];
 
-    return products;
+    const productsImages = [];
+
+    for (const product of products) {
+      const { image1, image2, image3, ...body } = product;
+      let image1File = null;
+      let image2File = null;
+      let image3File = null;
+
+      if (image1)
+        image1File = readFileSync(fileLoader().filesDir + '/' + image1);
+      if (image2)
+        image2File = readFileSync(fileLoader().filesDir + '/' + image2);
+      if (image3)
+        image3File = readFileSync(fileLoader().filesDir + '/' + image3);
+
+      productsImages.push({
+        ...body,
+        image1: {
+          data: image1File?.toString('base64'),
+          filename: image1,
+          mimetype: mime.getType(fileLoader().filesDir + '/' + image1),
+        },
+        image2: {
+          data: image2File?.toString('base64'),
+          filename: image2,
+          mimetype: mime.getType(fileLoader().filesDir + '/' + image2),
+        },
+        image3: {
+          data: image3File?.toString('base64'),
+          filename: image3,
+          mimetype: mime.getType(fileLoader().filesDir + '/' + image3),
+        },
+      });
+    }
+
+    return productsImages;
   }
 }
